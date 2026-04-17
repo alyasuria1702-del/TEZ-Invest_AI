@@ -151,14 +151,16 @@ export function PortfolioSelector() {
                       )}
                       {portfolios.length > 1 && (
                         <>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem
-                            className="text-destructive focus:text-destructive"
-                            onClick={() => setDeleteTarget(p)}
-                          >
-                            <Trash2 className="mr-2 h-3.5 w-3.5" />
-                            Удалить
-                          </DropdownMenuItem>
+                          <DropdownMenuSeparator className="my-1" />
+                          <div className="px-2 pb-1">
+                            <button
+                              onClick={() => setDeleteTarget(p)}
+                              className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm text-destructive hover:bg-destructive/10 transition-colors"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                              Удалить портфель
+                            </button>
+                          </div>
                         </>
                       )}
                     </DropdownMenuContent>
@@ -233,20 +235,34 @@ export function PortfolioSelector() {
       <AlertDialog open={!!deleteTarget} onOpenChange={v => !v && setDeleteTarget(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Удалить портфель?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Портфель «{deleteTarget?.name}» и все его позиции будут безвозвратно удалены.
+            <AlertDialogTitle className="flex items-center gap-2">
+              <Trash2 className="h-5 w-5 text-destructive" />
+              Удалить портфель?
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm text-muted-foreground">
+                <p>
+                  Вы удаляете портфель{' '}
+                  <span className="font-medium text-foreground">«{deleteTarget?.name}»</span>.
+                </p>
+                <div className="rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-destructive text-xs">
+                  ⚠ Все позиции в этом портфеле будут удалены безвозвратно.
+                  Это действие нельзя отменить.
+                </div>
+              </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Отмена</AlertDialogCancel>
+          <AlertDialogFooter className="gap-2">
+            <AlertDialogCancel className="flex-1">Оставить</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="flex-1 bg-destructive text-destructive-foreground hover:bg-destructive/90"
               onClick={handleDelete}
               disabled={isDeleting}
             >
-              {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Удалить
+              {isDeleting
+                ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Удаляем...</>
+                : <><Trash2 className="mr-2 h-4 w-4" />Удалить навсегда</>
+              }
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -1,325 +1,55 @@
 'use client'
 
-import { useState, useEffect, useCallback, Suspense } from 'react'
+import { useEffect, useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
 import { usePortfolio } from '@/components/portfolio-context'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Search, Plus, ArrowLeft, Loader2, CheckCircle2 } from 'lucide-react'
-import Link from 'next/link'
 import { DashboardHeader } from '@/components/dashboard/dashboard-header'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { PortfolioManage } from '@/components/portfolio/portfolio-manage'
+import { EmptyPortfolio } from '@/components/dashboard/empty-portfolio'
+import { Skeleton } from '@/components/ui/skeleton'
+import type { PositionWithInstrument } from '@/lib/types/database'
 
-interface SearchResult {
-  ticker: string
-  name: string
-  shortName: string
-  type: string
-  isin: string
-}
-
-function AddPositionForm() {
-  const router = useRouter()
-  const { activePortfolio } = usePortfolio()
-  const searchParams = useSearchParams()
-  const preselectedTicker = searchParams.get('ticker') || ''
-
-  const [searchQuery, setSearchQuery] = useState(preselectedTicker)
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([])
-  const [isSearching, setIsSearching] = useState(false)
-  const [selectedTicker, setSelectedTicker] = useState(preselectedTicker)
-  const [selectedName, setSelectedName] = useState('')
-
-  const [quantity, setQuantity] = useState('')
-  const [avgPrice, setAvgPrice] = useState('')
-  const [purchaseDate, setPurchaseDate] = useState('')
-  const [brokerAccount, setBrokerAccount] = useState('')
-
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-
-  const handleSearch = useCallback(async (query: string) => {
-    if (query.length < 2) {
-      setSearchResults([])
-      return
-    }
-
-    setIsSearching(true)
-    try {
-      const res = await fetch(
-        `https://iss.moex.com/iss/securities.json?q=${encodeURIComponent(query)}&limit=10`
-      )
-      const json = await res.json()
-      const secs = json.securities
-      if (!secs?.data?.length) {
-        setSearchResults([])
-        return
-      }
-
-      const cols = secs.columns as string[]
-      const results: SearchResult[] = secs.data
-        .slice(0, 8)
-        .map((row: unknown[]) => {
-          const get = (field: string) => row[cols.indexOf(field)] as string
-          return {
-            ticker: get('secid'),
-            name: get('name'),
-            shortName: get('shortname'),
-            type: get('type'),
-            isin: get('isin') || '',
-          }
-        })
-        .filter((r: SearchResult) => r.ticker && r.name)
-
-      setSearchResults(results)
-    } catch {
-      setSearchResults([])
-    } finally {
-      setIsSearching(false)
-    }
-  }, [])
+export default function PortfolioPage() {
+  const { activePortfolio, portfolios } = usePortfolio()
+  const [positions, setPositions] = useState<PositionWithInstrument[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!selectedTicker) {
-        handleSearch(searchQuery)
-      }
-    }, 400)
-    return () => clearTimeout(timer)
-  }, [searchQuery, selectedTicker, handleSearch])
-
-  const selectInstrument = (result: SearchResult) => {
-    setSelectedTicker(result.ticker)
-    setSelectedName(result.name)
-    setSearchQuery(result.ticker)
-    setSearchResults([])
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!selectedTicker) {
-      setError('Выберите инструмент из списка')
+    if (!activePortfolio) {
+      setPositions([])
+      setIsLoading(false)
       return
     }
-
-    setIsSubmitting(true)
-    setError(null)
-
-    try {
-      const res = await fetch('/api/positions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ticker: selectedTicker,
-          quantity: Number(quantity),
-          averageBuyPrice: Number(avgPrice),
-          purchaseDate: purchaseDate || null,
-          brokerAccount: brokerAccount || null,
-          portfolioId: activePortfolio?.id || null,
-        }),
+    setIsLoading(true)
+    const supabase = createClient()
+    supabase
+      .from('positions')
+      .select('*, instrument:instruments(*)')
+      .eq('portfolio_id', activePortfolio.id)
+      .order('created_at', { ascending: false })
+      .then(({ data }) => {
+        setPositions((data ?? []) as PositionWithInstrument[])
+        setIsLoading(false)
       })
+  }, [activePortfolio?.id])
 
-      const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.error || 'Ошибка добавления позиции')
-        return
-      }
-
-      setSuccess(true)
-      setTimeout(() => router.push('/dashboard'), 1500)
-    } catch {
-      setError('Произошла ошибка. Попробуйте ещё раз.')
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  if (success) {
-    return (
-      <div className="flex h-[calc(100vh-200px)] items-center justify-center">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <CheckCircle2 className="h-16 w-16 text-[var(--profit)]" />
-          <h2 className="text-2xl font-bold">Позиция добавлена!</h2>
-          <p className="text-muted-foreground">Перенаправляем на дашборд...</p>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="flex-1 p-4 md:p-6 max-w-2xl mx-auto w-full">
-      <div className="mb-6">
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/dashboard">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Назад
-          </Link>
-        </Button>
-      </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Добавить позицию</CardTitle>
-          <CardDescription>
-            Найдите инструмент и укажите параметры вашей сделки
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Instrument search */}
-            <div className="space-y-2">
-              <Label htmlFor="search">Инструмент *</Label>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="search"
-                  placeholder="Введите тикер или название (SBER, Газпром...)"
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value)
-                    setSelectedTicker('')
-                    setSelectedName('')
-                  }}
-                  className="pl-10"
-                  autoComplete="off"
-                />
-                {isSearching && (
-                  <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-muted-foreground" />
-                )}
-              </div>
-
-              {/* Search results dropdown */}
-              {searchResults.length > 0 && !selectedTicker && (
-                <div className="rounded-md border bg-popover shadow-md overflow-hidden">
-                  {searchResults.map((result) => (
-                    <button
-                      key={result.ticker}
-                      type="button"
-                      onClick={() => selectInstrument(result)}
-                      className="w-full flex items-start gap-3 px-4 py-3 hover:bg-accent text-left transition-colors"
-                    >
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono font-medium text-sm">{result.ticker}</span>
-                          <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
-                            {result.isin}
-                          </span>
-                        </div>
-                        <p className="text-xs text-muted-foreground truncate mt-0.5">
-                          {result.name}
-                        </p>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {selectedTicker && (
-                <p className="text-sm text-[var(--profit)]">
-                  ✓ Выбран: {selectedTicker} — {selectedName}
-                </p>
-              )}
-            </div>
-
-            {/* Quantity */}
-            <div className="space-y-2">
-              <Label htmlFor="quantity">Количество (шт.) *</Label>
-              <Input
-                id="quantity"
-                type="number"
-                min="1"
-                step="1"
-                placeholder="100"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                required
-              />
-            </div>
-
-            {/* Average buy price */}
-            <div className="space-y-2">
-              <Label htmlFor="avg-price">Средняя цена покупки (руб.) *</Label>
-              <Input
-                id="avg-price"
-                type="number"
-                min="0.01"
-                step="0.01"
-                placeholder="150.50"
-                value={avgPrice}
-                onChange={(e) => setAvgPrice(e.target.value)}
-                required
-              />
-            </div>
-
-            {/* Purchase date */}
-            <div className="space-y-2">
-              <Label htmlFor="date">Дата покупки</Label>
-              <Input
-                id="date"
-                type="date"
-                value={purchaseDate}
-                onChange={(e) => setPurchaseDate(e.target.value)}
-              />
-            </div>
-
-            {/* Broker account */}
-            <div className="space-y-2">
-              <Label htmlFor="broker">Брокерский счёт</Label>
-              <Input
-                id="broker"
-                placeholder="ИИС, Основной..."
-                value={brokerAccount}
-                onChange={(e) => setBrokerAccount(e.target.value)}
-              />
-            </div>
-
-            {error && (
-              <p className="text-sm text-destructive rounded-md bg-destructive/10 px-4 py-3">
-                {error}
-              </p>
-            )}
-
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isSubmitting || !selectedTicker || !quantity || !avgPrice}
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Добавление...
-                </>
-              ) : (
-                <>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Добавить в портфель
-                </>
-              )}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
-
-export default function AddPositionPage() {
   return (
     <div className="flex flex-col">
-      <DashboardHeader title="Добавить позицию" />
-      <Suspense fallback={<div className="p-6"><Loader2 className="animate-spin" /></div>}>
-        <AddPositionForm />
-      </Suspense>
+      <DashboardHeader title={activePortfolio ? 'Портфель \u00b7 ' + activePortfolio.name : 'Портфель'} />
+      <div className="flex-1 p-4 md:p-6">
+        {isLoading ? (
+          <div className="space-y-3">
+            {[1,2,3].map(i => <Skeleton key={i} className="h-16 w-full rounded-xl" />)}
+          </div>
+        ) : !activePortfolio || portfolios.length === 0 ? (
+          <EmptyPortfolio />
+        ) : (
+          <PortfolioManage
+            portfolio={activePortfolio}
+            positions={positions}
+          />
+        )}
+      </div>
     </div>
   )
 }
