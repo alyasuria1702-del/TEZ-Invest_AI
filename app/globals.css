@@ -1,75 +1,129 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
-
 /*
- * TEZ INVEST AI — Premium Fintech Theme
- * Design direction: Deep navy + warm gold accent
- * Typography: DM Sans (body) + DM Mono (numbers)
- * Aesthetic: Refined dark wealth management dashboard
+ * TEZ INVEST AI — Theme System
+ * :root  = light theme (default)
+ * .dark  = dark navy theme (toggled by next-themes via class on <html>)
  */
 
+/* ─── LIGHT THEME ─────────────────────────────────────────────── */
 :root {
-  /* ── Core backgrounds ── */
-  --background:        oklch(0.11 0.018 258);   /* deep navy #0d1117 */
-  --card:              oklch(0.155 0.018 258);   /* card surface */
-  --popover:           oklch(0.13 0.018 258);    /* popover */
-  --sidebar:           oklch(0.085 0.015 258);   /* sidebar darkest */
+  /* Backgrounds */
+  --background:         oklch(0.98 0.004 258);
+  --card:               oklch(1.00 0.000 0);
+  --popover:            oklch(1.00 0.000 0);
+  --sidebar:            oklch(0.96 0.006 258);
 
-  /* ── Foregrounds ── */
-  --foreground:        oklch(0.93 0.008 258);    /* off-white */
-  --card-foreground:   oklch(0.93 0.008 258);
-  --popover-foreground:oklch(0.93 0.008 258);
-  --sidebar-foreground:oklch(0.93 0.008 258);
+  /* Foregrounds */
+  --foreground:         oklch(0.18 0.020 258);
+  --card-foreground:    oklch(0.18 0.020 258);
+  --popover-foreground: oklch(0.18 0.020 258);
+  --sidebar-foreground: oklch(0.18 0.020 258);
 
-  /* ── Primary accent: warm gold ── */
-  --primary:           oklch(0.78 0.13 72);      /* #C9A84C warm gold */
-  --primary-foreground:oklch(0.085 0.015 258);   /* dark on gold */
+  /* Primary accent: warm gold */
+  --primary:            oklch(0.65 0.13 72);
+  --primary-foreground: oklch(1.00 0.000 0);
 
-  /* ── Secondary / muted ── */
-  --secondary:         oklch(0.20 0.018 258);
+  /* Secondary / muted */
+  --secondary:          oklch(0.94 0.006 258);
+  --secondary-foreground: oklch(0.18 0.020 258);
+  --muted:              oklch(0.93 0.006 258);
+  --muted-foreground:   oklch(0.50 0.012 258);
+
+  /* Accent */
+  --accent:             oklch(0.65 0.13 72);
+  --accent-foreground:  oklch(1.00 0.000 0);
+
+  /* Semantic */
+  --destructive:        oklch(0.55 0.22 22);
+  --destructive-foreground: oklch(1.00 0.000 0);
+
+  /* Borders / inputs */
+  --border:             oklch(0.88 0.008 258);
+  --input:              oklch(0.91 0.006 258);
+  --ring:               oklch(0.65 0.13 72);
+
+  /* Charts */
+  --chart-1:            oklch(0.65 0.13 72);
+  --chart-2:            oklch(0.52 0.14 215);
+  --chart-3:            oklch(0.56 0.16 160);
+  --chart-4:            oklch(0.54 0.18 295);
+  --chart-5:            oklch(0.58 0.16 35);
+
+  /* Finance */
+  --profit:             oklch(0.55 0.17 155);
+  --loss:               oklch(0.52 0.22 22);
+
+  /* Sidebar */
+  --sidebar-primary:          var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent:           oklch(0.91 0.008 258);
+  --sidebar-accent-foreground:oklch(0.18 0.020 258);
+  --sidebar-border:           oklch(0.88 0.008 258);
+  --sidebar-ring:             var(--ring);
+
+  --radius: 0.625rem;
+}
+
+/* ─── DARK THEME ──────────────────────────────────────────────── */
+.dark {
+  /* Backgrounds */
+  --background:         oklch(0.11 0.018 258);
+  --card:               oklch(0.155 0.018 258);
+  --popover:            oklch(0.13 0.018 258);
+  --sidebar:            oklch(0.085 0.015 258);
+
+  /* Foregrounds */
+  --foreground:         oklch(0.93 0.008 258);
+  --card-foreground:    oklch(0.93 0.008 258);
+  --popover-foreground: oklch(0.93 0.008 258);
+  --sidebar-foreground: oklch(0.93 0.008 258);
+
+  /* Primary accent: warm gold */
+  --primary:            oklch(0.78 0.13 72);
+  --primary-foreground: oklch(0.085 0.015 258);
+
+  /* Secondary / muted */
+  --secondary:          oklch(0.20 0.018 258);
   --secondary-foreground: oklch(0.93 0.008 258);
-  --muted:             oklch(0.185 0.015 258);
-  --muted-foreground:  oklch(0.58 0.012 258);
+  --muted:              oklch(0.185 0.015 258);
+  --muted-foreground:   oklch(0.58 0.012 258);
 
-  /* ── Accent (same as primary) ── */
-  --accent:            oklch(0.78 0.13 72);
-  --accent-foreground: oklch(0.085 0.015 258);
+  /* Accent */
+  --accent:             oklch(0.78 0.13 72);
+  --accent-foreground:  oklch(0.085 0.015 258);
 
-  /* ── Semantic ── */
-  --destructive:       oklch(0.55 0.22 22);
+  /* Semantic */
+  --destructive:        oklch(0.55 0.22 22);
   --destructive-foreground: oklch(0.93 0.008 258);
 
-  /* ── Borders / inputs ── */
-  --border:            oklch(0.24 0.018 258);
-  --input:             oklch(0.185 0.018 258);
-  --ring:              oklch(0.78 0.13 72);
+  /* Borders / inputs */
+  --border:             oklch(0.24 0.018 258);
+  --input:              oklch(0.185 0.018 258);
+  --ring:               oklch(0.78 0.13 72);
 
-  /* ── Chart palette ── */
-  --chart-1:           oklch(0.78 0.13 72);     /* gold */
-  --chart-2:           oklch(0.62 0.14 215);    /* sky blue */
-  --chart-3:           oklch(0.70 0.16 160);    /* emerald */
-  --chart-4:           oklch(0.68 0.18 295);    /* violet */
-  --chart-5:           oklch(0.72 0.16 35);     /* amber */
+  /* Charts */
+  --chart-1:            oklch(0.78 0.13 72);
+  --chart-2:            oklch(0.62 0.14 215);
+  --chart-3:            oklch(0.70 0.16 160);
+  --chart-4:            oklch(0.68 0.18 295);
+  --chart-5:            oklch(0.72 0.16 35);
 
-  /* ── Finance semantic ── */
-  --profit:            oklch(0.70 0.17 155);    /* green */
-  --loss:              oklch(0.60 0.22 22);     /* red */
+  /* Finance */
+  --profit:             oklch(0.70 0.17 155);
+  --loss:               oklch(0.60 0.22 22);
 
-  /* ── Sidebar ── */
+  /* Sidebar */
   --sidebar-primary:          var(--primary);
   --sidebar-primary-foreground: var(--primary-foreground);
   --sidebar-accent:           oklch(0.19 0.018 258);
   --sidebar-accent-foreground:oklch(0.93 0.008 258);
   --sidebar-border:           oklch(0.20 0.015 258);
   --sidebar-ring:             var(--ring);
-
-  /* ── Shape ── */
-  --radius: 0.625rem;
 }
 
-/* ── Theme token mapping ── */
+/* ─── Theme token mapping ─────────────────────────────────────── */
 @theme inline {
   --font-sans: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
   --font-mono: var(--font-dm-mono), 'DM Mono', monospace;
@@ -114,97 +168,89 @@
   --radius-xl:  calc(var(--radius) + 4px);
 }
 
-/* ── Base reset ── */
+/* ─── Base reset ──────────────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
 
   html {
-    font-feature-settings: 'tnum' on, 'lnum' on; /* tabular numbers everywhere */
+    font-feature-settings: 'tnum' on, 'lnum' on;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  .dark body {
     background-image:
       radial-gradient(ellipse 80% 50% at 50% -10%, oklch(0.22 0.05 258 / 0.4), transparent),
       radial-gradient(ellipse 40% 30% at 85% 60%, oklch(0.78 0.13 72 / 0.04), transparent);
     background-attachment: fixed;
   }
 
-  /* Numeric values: always tabular */
   .font-mono, [class*="font-mono"] {
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.01em;
   }
 
-  /* Headings: slightly tighter */
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.02em;
     font-weight: 600;
   }
 }
 
-/* ── Custom utilities ── */
+/* ─── Custom utilities ────────────────────────────────────────── */
 @layer utilities {
   .text-profit { color: var(--profit); }
   .text-loss   { color: var(--loss); }
   .bg-profit   { background-color: var(--profit); }
   .bg-loss     { background-color: var(--loss); }
+  .text-gold   { color: var(--primary); }
+  .num-positive { color: var(--profit); }
+  .num-negative { color: var(--loss); }
 
-  /* Gold shimmer for key numbers */
-  .text-gold {
-    color: var(--primary);
-  }
-
-  /* Card with subtle top-border accent */
   .card-accent {
     border-top: 1px solid oklch(0.78 0.13 72 / 0.35);
   }
 
-  /* Subtle glass effect for overlays */
   .glass {
     background: oklch(0.155 0.018 258 / 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
-
-  /* Number with sign coloring */
-  .num-positive { color: var(--profit); }
-  .num-negative { color: var(--loss); }
 }
 
-/* ── Scrollbar ── */
+/* ─── Scrollbar ───────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: oklch(0.30 0.018 258);
+  background: oklch(0.30 0.018 258 / 0.5);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: oklch(0.78 0.13 72 / 0.6);
 }
 
-/* ── Selection ── */
+/* ─── Selection ───────────────────────────────────────────────── */
 ::selection {
   background: oklch(0.78 0.13 72 / 0.25);
   color: var(--foreground);
 }
 
-/* ── Smooth card hover ── */
+/* ─── Components ──────────────────────────────────────────────── */
 @layer components {
   .card-hover {
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
   .card-hover:hover {
     border-color: oklch(0.78 0.13 72 / 0.3);
-    box-shadow: 0 0 0 1px oklch(0.78 0.13 72 / 0.1), 0 8px 32px oklch(0 0 0 / 0.3);
+    box-shadow: 0 0 0 1px oklch(0.78 0.13 72 / 0.1), 0 8px 32px oklch(0 0 0 / 0.15);
     transform: translateY(-1px);
   }
 
-  /* Sidebar nav item active glow */
   .nav-active {
     background: oklch(0.78 0.13 72 / 0.12);
     color: var(--primary);
@@ -212,7 +258,7 @@
   }
 }
 
-/* ── Table row hover ── */
+/* ─── Table hover ─────────────────────────────────────────────── */
 tbody tr {
   transition: background-color 0.15s ease;
 }
@@ -220,7 +266,7 @@ tbody tr:hover {
   background-color: oklch(0.78 0.13 72 / 0.04);
 }
 
-/* ── Input focus glow ── */
+/* ─── Input focus ─────────────────────────────────────────────── */
 input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 0 1px oklch(0.78 0.13 72 / 0.4);
 }
