@@ -79,11 +79,11 @@
    1b. ТЁМНАЯ ТЕМА
    ════════════════════════════════════════════════════════════════ */
 .dark {
-  /* ── Фоны: вариант А — поднятый фон ── */
-  --background:         oklch(0.145 0.020 258);   /* #141D2B — мягче, не давит */
-  --card:               oklch(0.185 0.022 258);   /* #1C2740 — карточки читаются */
-  --popover:            oklch(0.165 0.020 258);   /* поповер между фоном и картой */
-  --sidebar:            oklch(0.100 0.018 258);   /* #0D1420 — темнее фона, якорь */
+  /* ── Фоны: вариант А+ — ещё светлее ── */
+  --background:         oklch(0.175 0.022 258);   /* ~#1A2540 — уютный тёмно-синий */
+  --card:               oklch(0.220 0.024 258);   /* ~#222F4A — карточки хорошо видны */
+  --popover:            oklch(0.200 0.022 258);   /* поповер между слоями */
+  --sidebar:            oklch(0.125 0.018 258);   /* ~#101926 — темнее фона, якорь */
 
   /* ── Текст ── */
   --foreground:         oklch(0.93  0.008 258);   /* #EDF0F8               */
@@ -97,9 +97,9 @@
   --primary-foreground: oklch(0.085 0.015 258);   /* тёмный текст на золоте*/
 
   /* ── Нейтральные ── */
-  --secondary:          oklch(0.20  0.018 258);
+  --secondary:          oklch(0.235 0.020 258);
   --secondary-foreground: oklch(0.93 0.008 258);
-  --muted:              oklch(0.185 0.015 258);
+  --muted:              oklch(0.220 0.018 258);
   --accent:             oklch(0.78  0.130  72);
   --accent-foreground:  oklch(0.085 0.015 258);
 
@@ -112,8 +112,8 @@
   --info-foreground:    oklch(0.085 0.015 258);
 
   /* ── Границы и инпуты ── */
-  --border:             oklch(0.24  0.018 258);
-  --input:              oklch(0.185 0.018 258);
+  --border:             oklch(0.28  0.020 258);
+  --input:              oklch(0.220 0.020 258);
   --ring:               oklch(0.78  0.130  72);
 
   /* ── Графики ── */
@@ -126,9 +126,9 @@
   /* ── Сайдбар ── */
   --sidebar-primary:           var(--primary);
   --sidebar-primary-foreground:var(--primary-foreground);
-  --sidebar-accent:            oklch(0.215 0.020 258);  /* hover в сайдбаре */
+  --sidebar-accent:            oklch(0.245 0.022 258);  /* hover в сайдбаре */
   --sidebar-accent-foreground: oklch(0.93  0.008 258);
-  --sidebar-border:            oklch(0.22  0.018 258);  /* граница в сайдбаре */
+  --sidebar-border:            oklch(0.245 0.020 258);  /* граница в сайдбаре */
   --sidebar-ring:              var(--ring);
 }
 
@@ -253,9 +253,9 @@
   .dark body {
     background-image:
       radial-gradient(ellipse 80% 50% at 50% -10%,
-        oklch(0.26 0.05 258 / 0.30), transparent),
+        oklch(0.30 0.06 258 / 0.25), transparent),
       radial-gradient(ellipse 40% 30% at 85% 60%,
-        oklch(0.78 0.13 72 / 0.05), transparent);
+        oklch(0.78 0.13 72 / 0.06), transparent);
     background-attachment: fixed;
   }
 
