@@ -14,14 +14,16 @@ export default async function SettingsPage() {
     .single()
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <DashboardHeader title="Настройки" />
-      <div className="flex-1 p-4 md:p-6 max-w-2xl">
-        <TelegramSettings
-          initialChatId={tgConn?.telegram_chat_id ?? null}
-          initialAlertsEnabled={tgConn?.alerts_enabled ?? true}
-          initialAlertDays={tgConn?.alert_days_before ?? 3}
-        />
+      <div className="flex-1 p-4 md:p-6">
+        <div className="max-w-2xl w-full mx-auto">
+          <TelegramSettings
+            initialChatId={tgConn?.telegram_chat_id ?? null}
+            initialAlertsEnabled={tgConn?.alerts_enabled ?? true}
+            initialAlertDays={tgConn?.alert_days_before ?? 3}
+          />
+        </div>
       </div>
     </div>
   )
