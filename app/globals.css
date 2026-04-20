@@ -427,3 +427,10 @@ tbody tr {
 tbody tr:hover {
   background-color: oklch(0.78 0.13 72 / 0.04);
 }
+
+/* ─── Global layout fix: SidebarInset always fills available space ── */
+[data-slot="sidebar-inset"] {
+  flex: 1 1 0%;
+  min-width: 0;
+  width: 100%;
+}

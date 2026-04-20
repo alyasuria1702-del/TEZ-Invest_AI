@@ -95,10 +95,10 @@ export function TelegramSettings({
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 min-w-0 w-full">
 
       {/* ── Основная карточка ── */}
-      <Card>
+      <Card className="w-full min-w-0">
         <CardHeader>
           <div className="flex items-center justify-between gap-2 flex-wrap">
             <div className="flex items-center gap-2">
@@ -116,11 +116,11 @@ export function TelegramSettings({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-4 min-w-0">
           {chatId ? (
             <>
               {/* Статус подключения */}
-              <div className="rounded-lg border border-[var(--profit)]/20 bg-[var(--profit)]/5 px-4 py-3">
+              <div className="rounded-lg border border-[var(--profit)]/20 bg-[var(--profit)]/5 px-4 py-3 min-w-0">
                 <p className="text-sm font-medium text-[var(--profit)] mb-1">Подключён</p>
                 <p className="text-xs text-muted-foreground">
                   Chat ID: <code className="font-mono">{chatId}</code>
@@ -130,11 +130,11 @@ export function TelegramSettings({
               {/* Команды */}
               <div>
                 <p className="text-sm font-medium mb-2">Команды бота</p>
-                <div className="rounded-lg border border-border/50 overflow-hidden">
+                <div className="rounded-lg border border-border/50 overflow-hidden min-w-0">
                   {COMMANDS.map(({ cmd, desc }) => (
-                    <div key={cmd} className="flex items-center gap-3 px-3 py-2.5 border-b border-border/50 last:border-0">
+                    <div key={cmd} className="flex items-center gap-3 px-3 py-2.5 border-b border-border/50 last:border-0 min-w-0">
                       <code className="text-xs font-mono text-primary shrink-0 min-w-[90px]">{cmd}</code>
-                      <span className="text-xs text-muted-foreground">{desc}</span>
+                      <span className="text-xs text-muted-foreground truncate">{desc}</span>
                     </div>
                   ))}
                 </div>
