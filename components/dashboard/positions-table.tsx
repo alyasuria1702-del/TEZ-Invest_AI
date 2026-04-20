@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react'
+import { PriceAlertBadge } from '@/components/ui/price-alert-badge'
 import {
   Table,
   TableBody,
@@ -87,8 +88,15 @@ export function PositionsTable({ positions }: PositionsTableProps) {
                   <TableCell className="text-right font-mono">
                     {formatCurrency(position.average_buy_price)}
                   </TableCell>
-                  <TableCell className="text-right font-mono">
-                    {instrument.last_price ? formatCurrency(instrument.last_price) : '-'}
+                  <TableCell className="text-right">
+                    <div className="flex flex-col items-end gap-0.5">
+                      <span className="font-mono text-sm">
+                        {instrument.last_price ? formatCurrency(instrument.last_price) : '-'}
+                      </span>
+                      {instrument.price_change_percent != null && (
+                        <PriceAlertBadge changePct={instrument.price_change_percent} />
+                      )}
+                    </div>
                   </TableCell>
                   <TableCell className="text-right font-mono font-medium">
                     {formatCurrency(currentValue)}

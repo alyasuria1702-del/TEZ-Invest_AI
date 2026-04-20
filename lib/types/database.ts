@@ -9,7 +9,19 @@ export interface Profile {
   id: string
   email: string | null
   theme: ThemePreference
+  telegram_chat_id: number | null
   created_at: string
+}
+
+export interface TelegramConnection {
+  id: string
+  user_id: string
+  telegram_chat_id: number
+  telegram_username: string | null
+  portfolio_id: string | null
+  alerts_enabled: boolean
+  alert_days_before: number
+  connected_at: string
 }
 
 export interface Portfolio {

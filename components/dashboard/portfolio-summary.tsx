@@ -2,6 +2,7 @@
 
 import { TrendingUp, TrendingDown, Wallet, BarChart3, Coins, ArrowUpRight, ArrowDownRight } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { TooltipMetric } from '@/components/ui/tooltip-metric'
 import type { PositionWithInstrument } from '@/lib/types/database'
 import { calculatePortfolioMetrics } from '@/lib/utils/portfolio'
 import { formatCurrency, formatPercent } from '@/lib/utils/format'
@@ -22,7 +23,7 @@ export function PortfolioSummary({ positions }: PortfolioSummaryProps) {
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Стоимость портфеля
+            <TooltipMetric label="Стоимость портфеля" hint="Текущая рыночная стоимость всех позиций по последним котировкам MOEX" />
           </CardTitle>
           <Wallet className="h-4 w-4 text-primary" />
         </CardHeader>
@@ -41,7 +42,7 @@ export function PortfolioSummary({ positions }: PortfolioSummaryProps) {
         <div className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent ${isProfit ? 'via-[var(--profit)]/50' : 'via-[var(--loss)]/50'} to-transparent`} />
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Прибыль / Убыток
+            <TooltipMetric label="Прибыль / Убыток" hint="Разница между текущей стоимостью и суммой вложений. Не учитывает полученные купоны и дивиденды." />
           </CardTitle>
           {isProfit
             ? <TrendingUp className="h-4 w-4 text-[var(--profit)]" />
@@ -65,7 +66,7 @@ export function PortfolioSummary({ positions }: PortfolioSummaryProps) {
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Вложено
+            <TooltipMetric label="Вложено" hint="Сумма всех покупок по средней цене × количество. Без учёта проданных позиций." />
           </CardTitle>
           <Coins className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
@@ -82,7 +83,7 @@ export function PortfolioSummary({ positions }: PortfolioSummaryProps) {
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Классы активов
+            <TooltipMetric label="Классы активов" hint="Распределение по типам: акции, облигации, фонды. Полоски показывают долю каждого класса в портфеле." />
           </CardTitle>
           <BarChart3 className="h-4 w-4 text-muted-foreground" />
         </CardHeader>

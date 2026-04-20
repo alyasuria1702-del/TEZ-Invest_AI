@@ -130,10 +130,11 @@ export function PortfolioSelector() {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button
-                        className="mr-1 p-1 rounded opacity-0 group-hover/item:opacity-100 hover:bg-accent transition-opacity"
+                        className="mr-1 flex h-8 w-8 items-center justify-center rounded-md opacity-0 group-hover/item:opacity-100 hover:bg-accent active:bg-accent transition-opacity touch-manipulation"
                         onClick={e => e.stopPropagation()}
+                        aria-label="Действия с портфелем"
                       >
-                        <MoreHorizontal className="h-3.5 w-3.5 text-muted-foreground" />
+                        <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
                       </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent side="right" align="start" className="w-48">

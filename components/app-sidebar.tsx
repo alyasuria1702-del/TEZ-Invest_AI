@@ -15,6 +15,8 @@ import {
   Sun,
   Moon,
   Monitor,
+  CalendarDays,
+  Settings,
 } from 'lucide-react'
 
 import { createClient } from '@/lib/supabase/client'
@@ -43,10 +45,12 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { PortfolioSelector } from '@/components/portfolio-selector'
 
 const menuItems = [
-  { title: 'Дашборд',  url: '/dashboard',        icon: LayoutDashboard },
-  { title: 'Портфель', url: '/portfolio',         icon: Briefcase       },
-  { title: 'Импорт',   url: '/portfolio/import',  icon: FileUp          },
-  { title: 'Добавить', url: '/portfolio/add',     icon: Plus            },
+  { title: 'Дашборд',   url: '/dashboard',        icon: LayoutDashboard },
+  { title: 'Портфель',  url: '/portfolio',         icon: Briefcase       },
+  { title: 'Календарь', url: '/calendar',          icon: CalendarDays    },
+  { title: 'Импорт',    url: '/portfolio/import',  icon: FileUp          },
+  { title: 'Добавить',  url: '/portfolio/add',     icon: Plus            },
+  { title: 'Настройки', url: '/settings',          icon: Settings        },
 ]
 
 const themeOptions = [

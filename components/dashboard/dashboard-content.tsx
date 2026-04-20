@@ -9,6 +9,7 @@ import { AssetAllocationChart } from '@/components/dashboard/asset-allocation-ch
 import { PortfolioValueChart } from '@/components/dashboard/portfolio-value-chart'
 import { EmptyPortfolio } from '@/components/dashboard/empty-portfolio'
 import { DashboardPayments } from '@/components/dashboard/dashboard-payments'
+import { IncomeForecast } from '@/components/dashboard/income-forecast'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { PositionWithInstrument } from '@/lib/types/database'
 
@@ -69,6 +70,8 @@ export function DashboardContent() {
       </div>
 
       <DashboardPayments portfolioId={activePortfolio.id} />
+
+      <IncomeForecast portfolioId={activePortfolio.id} />
 
       <PositionsTable positions={positions} />
     </div>
