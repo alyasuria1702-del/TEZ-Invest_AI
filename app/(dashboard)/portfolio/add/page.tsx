@@ -156,7 +156,7 @@ function AddPositionForm() {
   }
 
   return (
-    <div className="flex-1 p-4 md:p-6 max-w-2xl mx-auto w-full">
+    <div className="p-4 md:p-6 max-w-2xl mx-auto w-full">
       <div className="mb-6">
         <Button variant="ghost" size="sm" asChild>
           <Link href="/dashboard">
@@ -335,11 +335,13 @@ function AddPositionForm() {
 
 export default function AddPositionPage() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <DashboardHeader title="Добавить позицию" />
-      <Suspense fallback={<div className="p-6"><Loader2 className="animate-spin" /></div>}>
-        <AddPositionForm />
-      </Suspense>
+      <div className="flex-1">
+        <Suspense fallback={<div className="p-6"><Loader2 className="animate-spin" /></div>}>
+          <AddPositionForm />
+        </Suspense>
+      </div>
     </div>
   )
 }
