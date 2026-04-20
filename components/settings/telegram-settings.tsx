@@ -95,12 +95,12 @@ export function TelegramSettings({
   }
 
   return (
-    <div className="space-y-4 w-full">
+    <div className="flex flex-col gap-4">
 
       {/* ── Основная карточка ── */}
-      <Card className="w-full">
+      <Card>
         <CardHeader>
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
             <div className="flex items-center gap-2">
               <MessageSquare className="h-5 w-5 text-muted-foreground shrink-0" />
               <CardTitle>Telegram-бот</CardTitle>
@@ -116,31 +116,31 @@ export function TelegramSettings({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="space-y-4 w-full">
+        <CardContent className="flex flex-col gap-4">
           {chatId ? (
-            /* ── Подключён ── */
             <>
+              {/* Статус подключения */}
               <div className="rounded-lg border border-[var(--profit)]/20 bg-[var(--profit)]/5 px-4 py-3">
-                <p className="text-sm font-medium text-[var(--profit)] mb-1">
-                  Подключён
-                </p>
+                <p className="text-sm font-medium text-[var(--profit)] mb-1">Подключён</p>
                 <p className="text-xs text-muted-foreground">
                   Chat ID: <code className="font-mono">{chatId}</code>
                 </p>
               </div>
 
+              {/* Команды */}
               <div>
                 <p className="text-sm font-medium mb-2">Команды бота</p>
                 <div className="rounded-lg border border-border/50 overflow-hidden">
                   {COMMANDS.map(({ cmd, desc }) => (
-                    <div key={cmd} className="flex items-center gap-3 px-3 py-2 border-b border-border/50 last:border-0">
-                      <code className="text-xs font-mono text-primary shrink-0 w-24">{cmd}</code>
+                    <div key={cmd} className="flex items-center gap-3 px-3 py-2.5 border-b border-border/50 last:border-0">
+                      <code className="text-xs font-mono text-primary shrink-0 min-w-[90px]">{cmd}</code>
                       <span className="text-xs text-muted-foreground">{desc}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
+              {/* Действия */}
               <div className="flex flex-wrap gap-2">
                 <Button variant="outline" size="sm" asChild>
                   <a href={`https://t.me/${BOT_USERNAME}`} target="_blank" rel="noopener noreferrer">
@@ -163,18 +163,17 @@ export function TelegramSettings({
               </div>
             </>
           ) : (
-            /* ── Не подключён ── */
             <>
               {/* Шаг 1 */}
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-3">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-semibold">
                     1
                   </span>
                   <p className="text-sm font-medium">Откройте бота и нажмите Start</p>
                 </div>
-                <div className="pl-9 space-y-1.5">
-                  <Button variant="outline" size="sm" asChild className="w-full sm:w-auto">
+                <div className="flex flex-col gap-1.5 ml-9">
+                  <Button variant="outline" size="sm" asChild className="self-start">
                     <a href={`https://t.me/${BOT_USERNAME}`} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="mr-2 h-3.5 w-3.5" />
                       @{BOT_USERNAME}
@@ -187,7 +186,7 @@ export function TelegramSettings({
               </div>
 
               {/* Шаг 2 */}
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-3">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-semibold">
                     2
@@ -196,7 +195,7 @@ export function TelegramSettings({
                     Вставьте Chat ID
                   </Label>
                 </div>
-                <div className="pl-9 space-y-2">
+                <div className="flex flex-col gap-2 ml-9">
                   <div className="flex gap-2">
                     <Input
                       id="chat-id"
@@ -204,7 +203,7 @@ export function TelegramSettings({
                       value={inputValue}
                       onChange={e => setInputValue(e.target.value)}
                       onKeyDown={e => e.key === 'Enter' && handleConnect()}
-                      className="font-mono w-40"
+                      className="font-mono max-w-[200px]"
                     />
                     <Button
                       onClick={handleConnect}
@@ -238,9 +237,9 @@ export function TelegramSettings({
 
       {/* ── Карточка оповещений ── */}
       {chatId && (
-        <Card className="w-full">
+        <Card>
           <CardHeader>
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
               <div className="flex items-center gap-2">
                 {alertsEnabled
                   ? <Bell className="h-5 w-5 text-muted-foreground shrink-0" />
@@ -271,7 +270,7 @@ export function TelegramSettings({
 
           {alertsEnabled && (
             <CardContent>
-              <div className="space-y-3">
+              <div className="flex flex-col gap-3">
                 <Label className="text-sm">Уведомлять о выплатах</Label>
                 <div className="flex flex-wrap gap-2">
                   {DAYS_OPTIONS.map(opt => (
