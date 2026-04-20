@@ -19,56 +19,56 @@
    1. СВЕТЛАЯ ТЕМА (дефолт)
    ════════════════════════════════════════════════════════════════ */
 :root {
-  /* ── Фоны ── */
-  --background:         oklch(0.98  0.004 258);   /* #F8FAFC страница      */
-  --card:               oklch(1.00  0.000   0);   /* #FFFFFF карточка      */
-  --popover:            oklch(1.00  0.000   0);   /* #FFFFFF поповер       */
-  --sidebar:            oklch(0.96  0.006 258);   /* сайдбар               */
+  /* ── Фоны: холодный slate-blue (#EEF1F7) ── */
+  --background:         oklch(0.955 0.010 258);   /* #EEF1F7 страница      */
+  --card:               oklch(0.982 0.006 258);   /* #F8F9FC карточка      */
+  --popover:            oklch(0.982 0.006 258);   /* #F8F9FC поповер       */
+  --sidebar:            oklch(0.935 0.012 258);   /* #E4E8F2 сайдбар       */
 
   /* ── Текст ── */
-  --foreground:         oklch(0.18  0.020 258);   /* #1A2030 основной      */
-  --card-foreground:    oklch(0.18  0.020 258);
-  --popover-foreground: oklch(0.18  0.020 258);
-  --sidebar-foreground: oklch(0.18  0.020 258);
-  --muted-foreground:   oklch(0.38  0.012 258);   /* #505868 WCAG AA ✓     */
+  --foreground:         oklch(0.175 0.022 258);   /* #1A2035 основной      */
+  --card-foreground:    oklch(0.175 0.022 258);
+  --popover-foreground: oklch(0.175 0.022 258);
+  --sidebar-foreground: oklch(0.175 0.022 258);
+  --muted-foreground:   oklch(0.400 0.016 258);   /* #5A6278 WCAG AA ✓     */
 
-  /* ── Акцент: тёплое золото ── */
-  --primary:            oklch(0.65  0.130  72);   /* #B8920E золото на белом*/
-  --primary-foreground: oklch(1.00  0.000   0);   /* белый текст на золоте */
+  /* ── Акцент: тёплое золото (темнее для контраста на светлом) ── */
+  --primary:            oklch(0.620 0.130  72);   /* #9A7800 золото        */
+  --primary-foreground: oklch(1.00  0.000   0);
 
   /* ── Нейтральные ── */
-  --secondary:          oklch(0.94  0.006 258);
-  --secondary-foreground: oklch(0.18 0.020 258);
-  --muted:              oklch(0.93  0.006 258);
-  --accent:             oklch(0.65  0.130  72);
+  --secondary:          oklch(0.915 0.012 258);   /* чуть темнее фона      */
+  --secondary-foreground: oklch(0.175 0.022 258);
+  --muted:              oklch(0.920 0.010 258);
+  --accent:             oklch(0.620 0.130  72);
   --accent-foreground:  oklch(1.00  0.000   0);
 
   /* ── Семантические ── */
-  --destructive:        oklch(0.55  0.22   22);   /* красный удаления      */
+  --destructive:        oklch(0.520 0.220  22);
   --destructive-foreground: oklch(1.00 0.000  0);
-  --profit:             oklch(0.55  0.17  155);   /* #4CAF82 рост/прибыль  */
-  --loss:               oklch(0.52  0.22   22);   /* красный убыток        */
-  --info:               oklch(0.55  0.14  230);   /* #5B9FE8 нейтральное   */
+  --profit:             oklch(0.480 0.160 155);   /* тёмно-зелёный         */
+  --loss:               oklch(0.500 0.220  22);
+  --info:               oklch(0.480 0.140 230);
   --info-foreground:    oklch(1.00  0.000   0);
 
   /* ── Границы и инпуты ── */
-  --border:             oklch(0.88  0.008 258);   /* #DDE0E8               */
-  --input:              oklch(0.91  0.006 258);
-  --ring:               oklch(0.65  0.130  72);   /* focus ring = золото   */
+  --border:             oklch(0.870 0.014 258);   /* #CDD3E0               */
+  --input:              oklch(0.935 0.010 258);   /* совпадает с сайдбаром */
+  --ring:               oklch(0.620 0.130  72);
 
-  /* ── Графики (chart-1..5 по дизайн-системе) ── */
-  --chart-1:            oklch(0.65  0.130  72);   /* золото    — облигации */
-  --chart-2:            oklch(0.52  0.140 215);   /* синий     — акции     */
-  --chart-3:            oklch(0.56  0.160 160);   /* зелёный   — ETF       */
-  --chart-4:            oklch(0.54  0.180 295);   /* фиолетовый— валюта    */
-  --chart-5:            oklch(0.58  0.160  35);   /* оранжевый — прочее    */
+  /* ── Графики ── */
+  --chart-1:            oklch(0.620 0.130  72);   /* золото    — облигации */
+  --chart-2:            oklch(0.480 0.140 215);   /* синий     — акции     */
+  --chart-3:            oklch(0.480 0.160 160);   /* зелёный   — ETF       */
+  --chart-4:            oklch(0.500 0.180 295);   /* фиолетовый— валюта    */
+  --chart-5:            oklch(0.520 0.160  35);   /* оранжевый — прочее    */
 
   /* ── Сайдбар ── */
   --sidebar-primary:           var(--primary);
   --sidebar-primary-foreground:var(--primary-foreground);
-  --sidebar-accent:            oklch(0.91  0.008 258);
-  --sidebar-accent-foreground: oklch(0.18  0.020 258);
-  --sidebar-border:            oklch(0.88  0.008 258);
+  --sidebar-accent:            oklch(0.910 0.014 258);   /* hover              */
+  --sidebar-accent-foreground: oklch(0.175 0.022 258);
+  --sidebar-border:            oklch(0.870 0.014 258);
   --sidebar-ring:              var(--ring);
 
   /* ── Радиус (базовый = 10px) ── */
