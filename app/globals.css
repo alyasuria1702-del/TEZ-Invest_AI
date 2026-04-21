@@ -428,28 +428,43 @@ tbody tr:hover {
   background-color: oklch(0.78 0.13 72 / 0.04);
 }
 
-/* ─── Global layout fix: SidebarInset always fills available space ── */
+/* ════════════════════════════════════════════════════════════════
+   LAYOUT FIXES — решение проблемы узких элементов
+   ════════════════════════════════════════════════════════════════ */
+
+/* Fix 1: SidebarInset всегда занимает доступное место */
 [data-slot="sidebar-inset"] {
-  flex: 1 1 0%;
-  min-width: 0;
-  width: 100%;
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: hidden;
 }
 
-/* ─── Fix: flex children never collapse below content ────────── */
-.flex > * { min-width: 0; }
-.grid > * { min-width: 0; }
+/* Fix 2: sidebar-wrapper как flex-row */
+[data-slot="sidebar-wrapper"] {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+}
 
-/* ─── Fix: Card always takes full width of its container ─────── */
-[data-slot="card"] { width: 100%; }
+/* Fix 3: flex и grid дети не схлопываются */
+[data-slot="sidebar-wrapper"] > * {
+  min-width: 0;
+}
 
-/* ─── Fix: Input always takes full width ─────────────────────── */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="date"],
-input[type="search"],
-textarea {
+/* Fix 4: карточки всегда на полную ширину */
+[data-slot="card"] {
   width: 100%;
   min-width: 0;
+}
+
+/* Fix 5: инпуты на полную ширину */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Fix 6: логотип на auth-страницах не разбивается */
+.auth-logo {
+  white-space: nowrap;
 }
