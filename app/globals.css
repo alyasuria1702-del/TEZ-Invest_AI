@@ -434,3 +434,22 @@ tbody tr:hover {
   min-width: 0;
   width: 100%;
 }
+
+/* ─── Fix: flex children never collapse below content ────────── */
+.flex > * { min-width: 0; }
+.grid > * { min-width: 0; }
+
+/* ─── Fix: Card always takes full width of its container ─────── */
+[data-slot="card"] { width: 100%; }
+
+/* ─── Fix: Input always takes full width ─────────────────────── */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="search"],
+textarea {
+  width: 100%;
+  min-width: 0;
+}

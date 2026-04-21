@@ -65,11 +65,16 @@ export default function SignUpPage() {
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
         <div className="flex flex-col gap-6">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+          <div className="flex flex-col items-center gap-3 mb-2">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
               <TrendingUp className="h-6 w-6 text-primary-foreground" />
             </div>
-            <span className="text-2xl font-bold">Tez Invest AI</span>
+            <div className="text-center">
+              <h1 className="text-2xl font-semibold tracking-tight">
+                Tez Invest<span className="text-primary"> AI</span>
+              </h1>
+              <p className="text-xs text-muted-foreground mt-0.5">Инвестиционный помощник</p>
+            </div>
           </div>
           <Card>
             <CardHeader>

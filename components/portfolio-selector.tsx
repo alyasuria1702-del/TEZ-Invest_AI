@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import {
   Briefcase, Plus, ChevronDown, Check, MoreHorizontal,
-  Pencil, Trash2, Star, StarOff, Loader2
+  Pencil, Trash2, Star, Loader2
 } from 'lucide-react'
 import { usePortfolio } from '@/components/portfolio-context'
 import {
@@ -12,9 +12,6 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
   Dialog,
