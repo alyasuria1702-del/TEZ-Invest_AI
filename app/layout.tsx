@@ -36,14 +36,16 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru" className={`${dmSans.variable} ${dmMono.variable}`} suppressHydrationWarning>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased w-full min-h-svh">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="w-full min-h-svh flex flex-col">
+            {children}
+          </div>
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </ThemeProvider>
       </body>
