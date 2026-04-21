@@ -241,6 +241,7 @@
     font-feature-settings: 'tnum' on, 'lnum' on;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    width: 100%;
   }
 
   body {
@@ -249,11 +250,6 @@
     line-height: 1.6;
     width: 100%;
     min-height: 100svh;
-  }
-
-  /* html тоже должен быть на всю ширину */
-  html {
-    width: 100%;
   }
 
   /* Принцип 8: градиент только в тёмной теме */
@@ -436,42 +432,38 @@ tbody tr:hover {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   LAYOUT FIXES — решение проблемы узких элементов
+   LAYOUT FIXES
    ════════════════════════════════════════════════════════════════ */
 
-/* Fix 1: SidebarInset всегда занимает доступное место */
+/* SidebarInset всегда занимает доступное место */
 [data-slot="sidebar-inset"] {
   flex: 1 1 0% !important;
   min-width: 0 !important;
-  max-width: 100% !important;
   overflow-x: hidden;
 }
 
-/* Fix 2: sidebar-wrapper как flex-row */
+/* sidebar-wrapper — горизонтальный flex */
 [data-slot="sidebar-wrapper"] {
   display: flex !important;
   flex-direction: row !important;
   width: 100% !important;
+  min-height: 100svh;
 }
 
-/* Fix 3: flex и grid дети не схлопываются */
-[data-slot="sidebar-wrapper"] > * {
-  min-width: 0;
-}
-
-/* Fix 4: карточки всегда на полную ширину */
+/* Карточки на полную ширину контейнера */
 [data-slot="card"] {
   width: 100%;
   min-width: 0;
 }
 
-/* Fix 5: инпуты на полную ширину */
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+/* Инпуты всегда растягиваются */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+textarea,
+select {
   width: 100%;
   min-width: 0;
 }
 
-/* Fix 6: логотип на auth-страницах не разбивается */
-.auth-logo {
-  white-space: nowrap;
-}
+/* flex и grid дети не схлопываются */
+.flex > * { min-width: 0; }
+.grid > * { min-width: 0; }
