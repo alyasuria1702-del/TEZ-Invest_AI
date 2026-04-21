@@ -247,6 +247,13 @@
     @apply bg-background text-foreground;
     font-size: var(--text-base);
     line-height: 1.6;
+    width: 100%;
+    min-height: 100svh;
+  }
+
+  /* html тоже должен быть на всю ширину */
+  html {
+    width: 100%;
   }
 
   /* Принцип 8: градиент только в тёмной теме */
