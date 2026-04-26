@@ -176,9 +176,12 @@ export async function getHistoricalPrices(
     market = 'bonds'
   }
   
-  let url = `${MOEX_BASE_URL}/history/engines/${engine}/markets/${market}/boards/${boardId}/securities/${ticker}.json?limit=100`
+  // Default: last 365 days
+  const defaultFrom = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+  const fromDate = from || defaultFrom
   
-  if (from) url += `&from=${from}`
+  let url = `${MOEX_BASE_URL}/history/engines/${engine}/markets/${market}/boards/${boardId}/securities/${ticker}.json?limit=365&from=${fromDate}`
+  
   if (till) url += `&till=${till}`
   
   const response = await fetch(url, { next: { revalidate: 3600 } })
