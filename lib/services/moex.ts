@@ -160,7 +160,7 @@ export async function getMarketData(ticker: string, boardId: string = 'TQBR'): P
 
 // Get historical prices
 export async function getHistoricalPrices(
-  ticker: string, 
+  ticker: string,
   boardId: string = 'TQBR',
   from?: string,
   till?: string
@@ -169,39 +169,42 @@ export async function getHistoricalPrices(
   close: number
   volume: number
 }[]> {
-  let engine = 'stock'
-  let market = 'shares'
-  
-  if (['TQOB', 'TQCB', 'TQOD'].includes(boardId)) {
-    market = 'bonds'
-  }
-  
-  // Default: last 365 days
-  const defaultFrom = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+  const isBond = ['TQOB', 'TQCB', 'TQOD'].includes(boardId)
+  const market = isBond ? 'bonds' : 'shares'
+
+  // Default: last 365 days — ensures 1W/1M/3M filters all have data
+  const defaultFrom = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000)
+    .toISOString().slice(0, 10)
   const fromDate = from || defaultFrom
-  
-  let url = `${MOEX_BASE_URL}/history/engines/${engine}/markets/${market}/boards/${boardId}/securities/${ticker}.json?limit=365&from=${fromDate}`
-  
+
+  let url = `${MOEX_BASE_URL}/history/engines/stock/markets/${market}/boards/${boardId}/securities/${ticker}.json?limit=365&from=${fromDate}`
   if (till) url += `&till=${till}`
-  
+
   const response = await fetch(url, { next: { revalidate: 3600 } })
   if (!response.ok) return []
-  
+
   const json = await response.json()
   const history = json.history
-  
   if (!history?.data?.length) return []
-  
+
   return parseResponse<{
     TRADEDATE: string
     CLOSE: number
     LEGALCLOSEPRICE: number
+    WAPRICE: number
     VOLUME: number
-  }>(history).map(row => ({
-    date: row.TRADEDATE,
-    close: row.CLOSE || row.LEGALCLOSEPRICE || 0,
-    volume: row.VOLUME || 0
-  }))
+    FACEVALUE: number
+  }>(history)
+    .map(row => ({
+      date: row.TRADEDATE,
+      // Bonds: LEGALCLOSEPRICE — % of face value → roubles
+      // Shares: CLOSE or WAPRICE
+      close: isBond
+        ? ((row.LEGALCLOSEPRICE || row.CLOSE || 0) / 100) * (row.FACEVALUE || 1000)
+        : (row.CLOSE || row.WAPRICE || 0),
+      volume: row.VOLUME || 0,
+    }))
+    .filter(row => row.close > 0)
 }
 
 // Get bond coupons
